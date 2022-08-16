@@ -15,9 +15,9 @@ class Solution {
     // Time: O(n ^ 2)		Space: (1)
     static int findNumberOfTriangles(int arr[], int n) {
     	/* Approach: Sum of any two sides > third side
-    If the array is sorted, the by fixing the currLargest elem as the third side reduces complexity, as-
-    arr[i] + arr[j] > arr[currLargest], then it is possible to create triangle with arr values inside range(i, j).
-    Otherwise, we need larger sides to form a triangle. */
+    If the array is sorted, then, by fixing the currLargest elem as the third side reduces complexity,
+    as- arr[i] + arr[j] > arr[currLargest], then it is possible to create triangle with arr values inside
+    range(i, j). Otherwise, we need larger sides to form a triangle. */
         Arrays.sort(arr);
         int count = 0;
         for (int k = n - 1; k >= 0; k--) { // O(n) running time
