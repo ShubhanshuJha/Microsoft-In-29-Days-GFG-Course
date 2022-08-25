@@ -14,7 +14,7 @@ Output:	5 2 3
 Explanation: At the second turn first one receives 4 and then we have no more candies left. */
 
 class Solution {
-    // Time: O(N)      Space: O(K)
+    // Time: O(Number of turns + K)      Space: O(K)
     static Long[] distributeCandies(int N, int K) {
         Long[] arr = new Long[K];
         Arrays.fill(arr, 0L);
