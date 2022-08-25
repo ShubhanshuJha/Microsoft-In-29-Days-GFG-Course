@@ -13,6 +13,25 @@ Example 2:	Input:	N = 10, K = 3
 Output:	5 2 3
 Explanation: At the second turn first one receives 4 and then we have no more candies left. */
 
-
+class Solution {
+    // Time: O(N)      Space: O(K)
+    static Long[] distributeCandies(int N, int K) {
+        Long[] arr = new Long[K];
+        Arrays.fill(arr, 0L);
+        int j = 0;
+        while (N > 0) {
+            for (int i = 0; i < K; i++) {
+                j++;
+                if (N <= 0) break;
+                if (j < N)
+                    arr[i] += Long.valueOf(j);
+                else
+                    arr[i] += Long.valueOf(N);
+                N -= j;
+            }
+        }
+        return arr;
+    }
+}
 
 
