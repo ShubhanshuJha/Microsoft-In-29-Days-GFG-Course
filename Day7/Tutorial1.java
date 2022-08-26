@@ -34,4 +34,49 @@ class Solution {
     }
 }
 
+---------------------------------------------------------------------------------
+
+class Solution {
+    // Time: O(logN + K)      Space: O(K)
+    static Long[] distributeCandies(int N, int K) {
+        Long[] arr = new Long[K];
+        Arrays.fill(arr, 0L);
+        
+        long low = 0L, high = N;
+        long count = 0L, n = Long.valueOf(N);
+        while (low <= high) {
+            long mid = (high + low) >> 1;
+            long sum = (mid * (mid + 1)) >> 1;
+            
+            if (sum <= n) {
+                count = mid / K; // no. of turns
+                low = mid + 1; // right half
+            } else {
+                high = mid - 1; // left half
+            }
+        }
+        // Last term of the last complete series
+        long last = count * K;
+        n -= ((last * (last + 1)) >> 1);
+        
+        int i = 0;
+        // First term of the incomplete series
+        Long term = Long.valueOf((count * K) + 1);
+        while (n > 0L) {
+            if (term <= n) {
+                arr[i++] = term;
+                n -= term;
+                term++;
+            } else {
+                arr[i++] += n;
+                n = 0L;
+            }
+        }
+        // Counting total candies
+        for (i = 0; i < K; i++)
+            arr[i] += Long.valueOf((count * (i + 1)) + ((K * (count * (count - 1))) >> 1));
+        
+        return arr;
+    }
+}
 
