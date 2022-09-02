@@ -24,3 +24,38 @@ Explanation: The most optimal way to paint:
 		Painter 2 allocation : {40}
 		Job will be complete at time = 60 */
 
+class Solution {
+	// Time: O(log(sum(arr)) n)		Space: O(1)
+    static long minTime(int[] arr, int n, int k) {
+        // One painter can paint all the board in sum(arr) time
+        // N painters can paint all the board in max(arr) time
+        // So, for this problem, lower bound = max(arr) and upper bound = sum(arr)
+        long low = 0L, high = 0L;
+        for (int i : arr) {
+            low = Long.max(low, i);
+            high += i;
+        }
+        long result = 0L;
+        while (low <= high) {
+            long mid = (low + high) >> 1;
+            int pCounter = 1;
+            long sum = 0L;
+            for (int i = 0; i < n; i++) {
+                if (sum + arr[i] <= mid) {
+                    sum += arr[i];
+                } else {
+                    // new painter is needed
+                    pCounter++;
+                    sum = arr[i];
+                }
+            }
+            if (pCounter <= k) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return result;
+    }
+}
