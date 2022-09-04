@@ -30,7 +30,7 @@ class Solution {
 --------------------------------------------------------------
 // Optimized approach
 class Solution {
-	// Time: O(N)	Space: O(1)
+	// Time: O(N/2)	Space: O(1)
     int getMiddle(Node head) {
         Node small = head,
             fast = head;
