@@ -13,22 +13,23 @@ Explanation: After reversing the list, elements are 10->9->8->7->2. */
 class Solution {
 	// Time: O(N)		Space: O(N)
     Node reverseList(Node head) {
-        Node temp = head;
-        String s = "";
-        while(temp.next != null) {
-            s += (String.valueOf(temp.value) + " ");
-            temp = temp.next;
+        ArrayList<Integer> vals = new ArrayList<>();
+        for (Node temp = head; temp != null; temp = temp.next)
+            vals.add(temp.data);
+        Collections.reverse(vals);
+        Node h = null;
+        Node t = null;
+        for (int i : vals) {
+            Node n = new Node(i);
+            if (h == null) {
+                h = n;
+                t = n;
+            } else {
+                t.next = n;
+                t = n;
+            }
         }
-        String[] str = s.split(" ");
-        Node end;
-        for(int i = str.length - 1; i >= 0; i--) {
-            temp.value = Integer.parseInt(str[i]);
-            temp.next = null;
-            if(i == str.length - 1)
-                end = temp;
-            temp = temp.next;
-        }
-        return end;
+        return h;
     }
 }
 --------------------------------------------------------------------
