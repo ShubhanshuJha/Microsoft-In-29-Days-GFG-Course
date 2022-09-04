@@ -13,7 +13,7 @@ Explanation: Middle of linked list is 7. */
 
 // Naive approach
 class Solution {
-	// Time: O(N + N/2)		Space: O(1)
+	// Time: O(N) + O(N/2)		Space: O(1)
     int getMiddle(Node head) {
         int count = 0;
         Node temp = head;
