@@ -44,3 +44,37 @@ class Solution {
         return h;
     }
 }
+------------------------------------------------------------------------------
+// Optimized approach
+class Solution {
+    // Time: O(N)      Space: O(1)
+    public static Node reverse(Node node, int k) {
+        if (node == null || node.next == null)
+            return node;
+        
+        Node curr = node;
+        Node h = null, t = null;
+        
+        while (curr != null) {
+            Node rev = null;
+            
+            for (int count = 1; count <= k && curr != null; count++) {
+                Node nextNode = curr.next;
+                curr.next = rev;
+                rev = curr;
+                curr = nextNode;
+            }
+            while (rev != null) {
+                if (h == null) {
+                    h = rev;
+                    t = rev;
+                } else {
+                    t.next = rev;
+                    t = rev;
+                }
+                rev = rev.next;
+            }
+        }
+        return h;
+    }
+}
