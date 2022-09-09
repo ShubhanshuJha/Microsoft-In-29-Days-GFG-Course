@@ -49,7 +49,7 @@ class Solution {
 class Solution {
     // Time: O(N)      Space: O(1)
     public static Node reverse(Node node, int k) {
-        if (node == null || node.next == null)
+        if (node == null || node.next == null || k == 1)
             return node;
         
         Node curr = node;
@@ -76,5 +76,29 @@ class Solution {
             }
         }
         return h;
+    }
+}
+------------------------------------------------------------------------------
+// Recursive approach
+class Solution {
+    // Time: O(N)    Space: O(N/k)
+    public static Node reverse(Node node, int k) {
+        if (node == null || node.next == null || k == 1)
+            return node;
+        
+        Node prev = null, curr = node, next = null;
+        // Iteratively reverse 1st k group of the linked list
+        for (int c = 1; c <= k && curr != null; c++) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // Recursively solving the rest portion (if available)
+        if (next != null) {
+            node.next = reverse(next, k);
+        }
+        // Prev pointer will have the head of the reversed linked list
+        return prev;
     }
 }
