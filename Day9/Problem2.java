@@ -88,16 +88,11 @@ class Intersect {
 	int intersectPoint(Node head1, Node head2) {
 	    if (head1 == null || head2 == null) return -1;
 	    Node h1 = head1, h2 = head2;
-	    while (h1 != null && h2 != null) {
-	    	if (h1 == h2) return h1.data;
-	    	h1 = h1.next;
-	    	h2 = h2.next;
-	    	if (h1 == null)
-	    		h1 = head2;
-	    	else if (h2 == null)
-	    		h2 = head1;
+	    while (h1 != h2) {
+	    	h1 = h1 == null ? head2 : h1.next;
+	    	h2 = h2 == null ? head1	: h2.next;
 	    }
-	    return -1;
+	    return h1 == null ? -1 : h1.data;
 	}
 }
 
