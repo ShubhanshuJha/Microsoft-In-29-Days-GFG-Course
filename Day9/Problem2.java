@@ -28,6 +28,19 @@ Explanation:
 
 // Naive approach
 class Intersect {
+	// Time: O(N * M)		Space: O(1)
+	int intersectPoint(Node head1, Node head2) {
+	    if (head1 == null || head2 == null) return -1;
+	    for (Node tmp1 = head1; tmp1 != null; tmp1 = tmp1.next)
+		    for (Node tmp2 = head2; tmp2 != null; tmp2 = tmp2.next) {
+		        if (tmp1 == tmp2) return tmp2.data;
+		    }
+	    return -1;
+	}
+}
+------------------------------------------------
+// Optimized approach
+class Intersect {
 	// Time: O(N + M)		Space: O(N)
 	int intersectPoint(Node head1, Node head2) {
 	    if (head1 == null || head2 == null) return -1;
@@ -41,3 +54,50 @@ class Intersect {
 	}
 }
 ------------------------------------------------
+// Optimal approach1
+class Intersect {
+	// Time: O(N) + O(M) + O(abs(M-N)) + O(min(M, N))	Space: O(1)
+	//		=> O(2 max(M, N))
+	int intersectPoint(Node head1, Node head2) {
+	    if (head1 == null || head2 == null) return -1;
+	    int countOf1 = 0, countOf2 = 0;
+	    for (Node tmp = head1; tmp != null; tmp = tmp.next)
+	        countOf1++;
+	    for (Node tmp = head2; tmp != null; tmp = tmp.next)
+	        countOf2++;
+	    Node h1 = head1, h2 = head2;
+	    if (countOf1 > countOf2) {
+	    	while (countOf1-- > countOf2)
+	    		h1 = h1.next;
+	    } else if (countOf1 < countOf2) {
+	    	while (countOf2-- > countOf1)
+	    		h2 = h2.next;
+	    }
+	    while (h1 != null) {
+	    	if (h1 == h2) return h1.data;
+	    	h1 = h1.next;
+	    	h2 = h2.next;
+	    }
+	    return -1;
+	}
+}
+------------------------------------------------
+// Optimal approach2: same time complexity but optimized code structure
+class Intersect {
+	// Time: O(2 max(M, N))		Space: O(1)
+	int intersectPoint(Node head1, Node head2) {
+	    if (head1 == null || head2 == null) return -1;
+	    Node h1 = head1, h2 = head2;
+	    while (h1 != null && h2 != null) {
+	    	if (h1 == h2) return h1.data;
+	    	h1 = h1.next;
+	    	h2 = h2.next;
+	    	if (h1 == null)
+	    		h1 = head2;
+	    	else if (h2 == null)
+	    		h2 = head1;
+	    }
+	    return -1;
+	}
+}
+
