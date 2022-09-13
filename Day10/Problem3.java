@@ -87,4 +87,46 @@ class GfG {
 	    return true;
 	}
 }
+-----------------------------------------------------------------------
+// Optimized approach
+class GfG {
+	// Time: O(n ^ 2)		Space: O(1)
+	public static int maxPalindrome(Node head) {
+	    if (head == null) return 0;
+	    if (head.next == null) return 1;
+	    int maxLen = 0;
+	    int lP = 0;
+	    Node rev = new Node(head.data);
+	    head = head.next;
+	    
+	    while (head != null) {
+	        Node next = head.next;
+	        head.next = rev;
+	        rev = head;
+	        head = next;
+	        
+	        maxLen = Integer.max(maxLen, (countPalin(rev, head) << 1));
+	        if (head != null) {
+	            maxLen = Integer.max(maxLen, (countPalin(rev, head.next) << 1) + 1);
+	        }
+	    }
+	    return maxLen;
+	}
+	private static int countPalin(Node a, Node b) {
+	    if (a == null || b == null) return 0;
+	    if (a.next == null || b.next == null) return a.data == b.data ? 1 : 0;
+	    int count = 0;
+	    
+	    while (a != null && b != null) {
+	        if (a.data == b.data) {
+	            count++;
+	            a = a.next;
+	            b = b.next;
+	        } else {
+	            break;
+	        }
+	    }
+	    return count;
+	}
+}
 
