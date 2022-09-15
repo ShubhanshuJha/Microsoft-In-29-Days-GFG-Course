@@ -56,9 +56,8 @@ class Solution {
     static int canReach(int[] A, int N) {
         int max = 1;
         for (int i = 1; i < N; i++) {
-            if (A[i] == 0 && max > i) continue;
-            else if (A[i] == 0 && max <= i) break;
-            max = Math.max(max, i + A[i]);
+            if (max >= i)
+                max = Math.max(max, i + A[i]);
         }
         return max >= N - 1 ? 1 : 0;
     }
