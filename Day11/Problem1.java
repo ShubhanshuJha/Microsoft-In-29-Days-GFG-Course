@@ -15,12 +15,6 @@ Explanation: There are multiple possible solutions, one of them is (3 4). We can
     and sell it on 4th day, which will give us maximum profit. */
 
 
-// Naive approach
-class Solution{
-    ArrayList<ArrayList<Integer>> stockBuySell(int A[], int n) {
-    }
-}
--------------------------------------------------------------------
 // Efficient approach
 class Solution {
     // Time: O(n)   Space: O(1)
