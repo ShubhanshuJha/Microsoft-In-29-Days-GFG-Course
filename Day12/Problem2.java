@@ -5,6 +5,22 @@ Example 1:	Input:	N = 4,	arr[] = {1,2,3,4}
 Output: 7
 Explanation: The subarray {3,4} has maximum xor value equal to 7. */
 
+// Kadanes Approach
+class Solution {
+    // Time: O(N)   Space: O(N)
+    static int maxSubarrayXOR(int N, int[] arr) {
+        if (N == 1) return arr[0];
+        
+        int ans = 1, max_sum = Integer.MIN_VALUE;
+        for(int i = 0; i < N; ++i){
+            if(i + 1 < N && arr[i] == arr[i + 1]) return arr[i];
+            ans = Integer.max(arr[i], arr[i] ^ ans);
+            max_sum = Integer.max(max_sum, ans);
+        }
+        return max_sum;
+    }
+}
+-----------------------------------------------------------------
 // Trie Approach
 class Solution {
     static int maxSubarrayXOR(int N, int[] arr) {
