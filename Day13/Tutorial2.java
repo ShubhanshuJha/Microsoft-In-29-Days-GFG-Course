@@ -12,7 +12,7 @@ Explanation: The string can be segmented as "i like samsung" or "i like sam sung
 
 // Trie Approach
 class Solution {
-	// Time: O(n*l+|A|2) where l is the leght of longest string present in the dictionary and |A| is the length of string A
+	// Time: O(n*l+|A|2) where l = legth of longest string present in the dictionary and |A| = length of string A
 	// Space: O(|A| + k) , where k = sum of length of all strings present in B
     public static int wordBreak(String A, ArrayList<String> B) {
         Trie root = new Trie();
