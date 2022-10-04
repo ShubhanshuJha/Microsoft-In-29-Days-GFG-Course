@@ -67,5 +67,107 @@ class Solution {
     }
 }
 -----------------------------------------------------------------------------------------------
+// Trie Approach
+class Solution {
+    private static String rev(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+    // Time: O(N * (l ^ 2))        Space: O(N)
+    public static int palindromepair(int N, String[] arr) {
+        if (N == 1) return 0;
+        Trie root = new Trie();
+        for (String str : arr) {
+            root.insert(str);
+        }
+        StringBuilder left = null;
+        for (int i = 0; i < N; i++) {
+            int l = arr[i].length();
+            if (l == 0) continue;
+            
+            String rev = rev(arr[i]);
+            boolean isSame = arr[i].equals(rev);
+            
+            if (isSame && root.count(arr[i]) > 1)
+                return 1;
+            if (!isSame && root.contains(rev))
+                return 1;
+            left = new StringBuilder();
+            for (int j = 0; j < l - 1; j++) {
+                left.append(arr[i].charAt(j));
+                String right = arr[i].substring(j + 1, l);
+                
+                if (isPalindrome(left.toString())) {
+                    rev = rev(right);
+                    if (root.contains(rev))
+                        return 1;
+                }
+                if (isPalindrome(right)) {
+                    rev = rev(left.toString());
+                    if (root.contains(rev))
+                        return 1;
+                }
+            }
+        }
+        return 0;
+    }
+    private static boolean isPalindrome(String str) {
+        if (str.length() <= 1) return true;
+        int l = 0, r = str.length() - 1;
+        while (l < r) {
+            if (str.charAt(l) != str.charAt(r))
+                return false;
+            l++; r--;
+        }
+        return true;
+    }
+};
 
+class TrieNode {
+    final int SIZE = 256;
+    TrieNode[] children;
+    boolean isEnd;
+    int wCount;
+    TrieNode() {
+        this.children = new TrieNode[SIZE];
+        this.isEnd = false;
+        this.wCount = 0;
+    }
+}
+
+class Trie {
+    private TrieNode root;
+    Trie() {
+        this.root = new TrieNode();
+    }
+    public void insert(String key) {
+        TrieNode curr = this.root;
+        for (char ch : key.toCharArray()) {
+            if (curr.children[ch] == null)
+                curr.children[ch] = new TrieNode();
+            curr = curr.children[ch];
+        }
+        curr.isEnd = true;
+        curr.wCount++;
+    }
+    public boolean contains(String key) {
+        TrieNode curr = this.root;
+        for (char ch : key.toCharArray()) {
+            if (curr.children[ch] != null)
+                curr = curr.children[ch];
+            else
+                return false;
+        }
+        return curr.isEnd;
+    }
+    public int count(String key) {
+        TrieNode curr = this.root;
+        for (char ch : key.toCharArray()) {
+            if (curr.children[ch] != null)
+                curr = curr.children[ch];
+            else
+                return -1;
+        }
+        return curr.isEnd ? curr.wCount : -1;
+    }
+}
 
