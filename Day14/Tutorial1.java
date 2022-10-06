@@ -69,28 +69,45 @@ class Solution {
 }
 
 ---------------------------------------------------------------
+// Optimized Approach
 class Solution {
     // Time: O(n)       Space: O(n)
     int celebrity(int[][] M, int n) {
-        Stack<Integer> st = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < n; i++)
-            st.push(i);
-        while (st.size() > 1) {
-            int a = st.pop();
-            int b = !st.isEmpty() ? st.pop() : a;
+            stack.push(i);
+        while (stack.size() > 1) {
+            int a = stack.pop();
+            int b = stack.pop();
             if (M[a][b] == 1)
-                st.push(b);
+                stack.push(b);
             else
-                st.push(a);
+                stack.push(a);
         }
-        int res = st.pop();
+        int res = stack.pop();
         for (int i = 0; i < n; i++) {
             if (i == res) continue;
-            if (M[res][i] == 1 || M[i][res] == 0)
+            if (M[i][res] == 0 || M[res][i] == 1)
                 return -1;
         }
         return res;
     }
 }
 ---------------------------------------------------------------
-
+// Efficient Approach
+class Solution {
+    // Time: O(n)       Space: O(1)
+    int celebrity(int[][] M, int n) {
+        int res = n - 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (M[res][i] == 1)
+                res = i;
+        }
+        for (int i = 0; i < n; i++) {
+            if (i == res) continue;
+            if (M[i][res] == 0 || M[res][i] == 1)
+                return -1;
+        }
+        return res;
+    }
+}
