@@ -19,7 +19,45 @@ Explanation: In the first test case for query:
         getMin() Return the minimum element, min element will be 1  */
 
 
-// This will return the minElem from Stack in O(1) space and O(1) time, as per the question
+// Naive Approch: Using another Stack, i.e. extra O(N) space
+class GfG {
+    Stack<Integer> s;
+    Stack<Integer> min;
+    
+    /*returns min element from stack*/
+    int getMin() {
+        return s == null || s.isEmpty() ? -1 : min.peek();
+    }
+    
+    /*returns poped element from stack*/
+    int pop() {
+        if (s == null || s.isEmpty())
+            return -1;
+        
+        min.pop();
+        return s.pop();
+    }
+
+    /*push element x into the stack*/
+    void push(int x) {
+        if (s == null || s.isEmpty()) {
+            if (s == null) {
+                s = new Stack<>();
+                min = new Stack<>();
+            }
+            s.push(x);
+            min.push(x);
+        } else {
+            s.push(x);
+            if (s.peek() < min.peek())
+                min.push(s.peek());
+            else
+                min.push(min.peek());
+        }
+    }   
+}
+-----------------------------------------------------------------------------------------------------------
+// Effiecient Approch: Returns the minElem from Stack in O(1) space and O(1) time, as per the question
 class GfG {
     int minEle;
     Stack<Integer> s;
