@@ -111,3 +111,24 @@ class Solution {
         return res;
     }
 }
+---------------------------------------------------------------
+// Efficient Approach: Two Pointer
+class Solution {
+    // Time: O(n)       Space: O(1)
+    int celebrity(int[][] M, int n) {
+        int l = 0, r = n - 1;
+        while (l < r) {
+            if (M[l][r] == 1)
+                l++;
+            else
+                r--;
+        }
+        int res = l;
+        for (int i = 0; i < n; i++) {
+            if (i == res) continue;
+            if (M[i][res] == 0 || M[res][i] == 1)
+                return -1;
+        }
+        return res;
+    }
+}
