@@ -36,7 +36,7 @@ Input:	Target Node = 10
 
 Output: 5  */
 
-
+// Recursive BFS Approach
 class Solution {
     /*class Node {
     	int data;
@@ -84,3 +84,73 @@ class Solution {
         return -1;
     }
 }
+-----------------------------------------------------------------------------
+// Iterative BFS Approach
+class Solution {
+    /*class Node {
+        int data;
+        Node left;
+        Node right;
+    
+        Node(int data) {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    }*/
+    // Time: O(N)       Space: O(N)
+    public static int minTime(Node root, int target) {
+        if (root == null)
+            return 0;
+        HashMap<Node, Node> parent = new HashMap<>();
+        Deque<Node> deq = new LinkedList<>();
+        deq.offer(root);
+        parent.put(root, null);
+        Node targetNode = null;
+        while (!deq.isEmpty()) {
+            Node curr = deq.pollFirst();
+            if (curr.data == target) {
+                targetNode = curr;
+            }
+            if (curr.left != null) {
+                deq.offer(curr.left);
+                parent.put(curr.left, curr);
+            }
+            if (curr.right != null) {
+                deq.offer(curr.right);
+                parent.put(curr.right, curr);
+            }
+        }
+        deq.clear();
+        int count = 0;
+        HashSet<Node> vis = new HashSet<>();
+        deq.offer(targetNode);
+        vis.add(targetNode);
+        
+        while (!deq.isEmpty()) {
+            int size = deq.size();
+            boolean burnt = false;
+            for (int i = 1; i <= size; i++) {
+                Node curr = deq.pollFirst();
+                if (curr == null) continue;
+                if (parent.get(curr) != null && vis.add(parent.get(curr))) {
+                    burnt = true;
+                    deq.offer(parent.get(curr));
+                }
+                if (curr.left != null && vis.add(curr.left)) {
+                    burnt = true;
+                    deq.offer(curr.left);
+                }
+                if (curr.right != null && vis.add(curr.right)) {
+                    burnt = true;
+                    deq.offer(curr.right);
+                }
+            }
+            if (burnt) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
