@@ -20,7 +20,7 @@ Explaination: Given arr[] cannot represent preorder traversal of a BST.  */
 
 // BST Approach: took more time
 class Solution {
-    // Time: O(N) [in worst-case]      Space: O(N) [in worst-case]
+    // Time: O(N * N) [in worst-case]      Space: O(N) [in worst-case]
     static int canRepresentBST(int[] arr, int N) {
         BST root = new BST();
         for (int val : arr) {
@@ -54,6 +54,7 @@ class BST {
     public final void add(int key) {
         this.root = add(this.root, key);
     }
+    // in worst case inserting a element can take O(n) time [if skewed tree]
     private Node add(Node root, int key) {
         if (root == null) {
             root = new Node(key);
